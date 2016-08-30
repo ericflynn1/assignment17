@@ -42,9 +42,9 @@ document.getElementById('checkBtn').onclick = function (){
     let guess = document.getElementById('guess').value;
     let guessesLeft = 9;
     checkGuess(guess);
-    counter++;
 
-    if(counter === maxGuesses) {
+    if(counter === guessesLeft) {
+// I know we don't use 'alert' but I wanted to make a popup.
         alert("Game Over");
     }
 };
