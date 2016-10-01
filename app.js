@@ -16,44 +16,78 @@
 
 let word = ['bat', 'cook', 'follow', 'guitar', 'bank', 'shallow', 'helicopter'];
 // http://stackoverflow.com/questions/4550505/getting-random-value-from-an-array
-let pickWord = word[Math.floor(Math.random() * word.length)];
+// let pickWord = word[Math.floor(Math.random() * word.length)];
 // Works for generating radom word from list!
 function randomLength(pickWord) {
-    return pickWord.length
+    let randomWord = word[Math.floor(Math.random() * word.length)];
+    return word[randomWord].split('');
 };
 // console.log(randomLength(pickWord));
 // Works to show amount of characters in word. Need to display blanks somehow.
 // Need to write a function that turns the word into a string that can
 // be compared to a guessed letter.
-function stringy(pickWord) {
-    let strings = pickWord.stringify
-};
 function numGuesses() {
-    let guesses = 0;
-    if (guesses > 9) {
-        
-    }
-};
-// Not sure how to proceed/ write any of the remaining functions.
-// Moving onto simpler design aspects.
+    return 8
 
-document.getElementById('checkBtn').onclick = function (){
-        // '.onclick of null' error for the button?
-    let guess = document.getElementById('guess').value;
-    let guessesLeft = 9;
-    checkGuess(guess);
-
-    if(counter === guessesLeft) {
-// I know we don't use 'alert' but I wanted to make a popup.
-        alert("Game Over");
-    }
 };
-// I know we don't use 'alert' but I forgot how to print it onto the DOM.
-function checkGuess(guess) {
-    if (guessInput.value === strings){
-        answerDisplay.innerHTML = "Correct!";
-    } else if (guessInput !== strings) {
-        answerDisplay.innerHTML = "Incorrect";
-        guessesLeft -= 1;
-    }
+
+function render(wordz, wrongLetters) {
+    let parent = document.querySelector('#guessesHere');
+    let template = document.querySelector("#hangman-Template").innerHTML;
+    parent.innerHTML = Mustache.render(template, {
+        wordToGuess: wordz,
+        graveyard: listOfWrongs,
+        lives: numGuesses() = listOfWrongs.length
+    });
 }
+
+window.addEventListener('load', function () {
+    let wordToGuess = pickWord(word);
+    console.log(wordToGuess);
+    let wrongs = [];
+    let rights = [];
+    render(wordToGuess, wrongs);
+    //Scott helped with this
+    let checkIt = document.querySelector('checkBtn');
+    checkIt.addEventListener('click' function () {
+        let guess = document.querySelector('#guess').value;
+        if (wrongs.indexOf(inputValue) !== -1 || rights.indexOf(inputValue) !== -1) {
+            console.log('nope!');
+            document.querySelector('#guessBox').value = "";
+            return
+        }
+
+        let check = false;
+        for (let i = 0; i < wordToGuess.length; i++) {
+            if (inputValue === wordToGuess[i]) {
+                rights.push(inputValue);
+                check = true;
+                console.log('Correct!');
+            }
+        }
+        if (check === false) {
+            wrongs.push(inputValue);
+            console.log('WRONG');
+        }
+        check = false;
+
+        if (wrongs.length >= 8) {
+            console.log('GAME OVER');
+        }
+        if (rights.length === wordToGuess.length) {
+            console.log('WINNER');
+        }
+
+        render(wordToGuess, wrongs);
+        let paragraph = document.querySelectorAll(".letter");
+
+        for (let i = 0; i < wordToGuess.length; i++) {
+            for (let j = 0; j < rights.length; j++) {
+                if (rights[j] === wordToGuess[i]) {
+                    paragraph[i].classList.remove('transparent');
+                }
+            }
+        }
+        document.querySelector("#guessBox").value = "";
+    });
+});

@@ -1,14 +1,34 @@
 <!doctype html>
 
 <html>
-    <head>
-        <script src="app.js"></script>
-    </head>
-    <body>
-        <h1> Page Loaded</h1>
-        <main>
-            <input type='text' id='guess'>
-<button id="checkBtn">Guess</button>
-        </main>
-    </body>
+
+<head>
+    <script src="app.js"></script>
+    <script id="hangman-Temlplate" type="x-mustache-template"></script>
+</head>
+
+<body>
+    <h1> Hangman</h1>
+    <main>
+        <section id="guessesHere">
+            <input type='text' id='guessBox'>
+            <button id="checkBtn">Guess</button> {{ #theWord }}
+            <p class="correctLetters">{{ . }}</p>
+            {{ /theWord}}
+        </section>
+        <section id="previousGuesses">
+            <h2>Previous Guesses</h2>
+            {{ #previous }
+            <p> {{ . }}</p>
+            {{ /previous }}
+        </section>
+        <section id="lives">
+            {{ lives }}
+        </section>
+        <section id="game">
+
+        </section>
+    </main>
+</body>
+
 </html>
