@@ -3,8 +3,9 @@
 <html>
 
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.js"></script>
     <script src="app.js"></script>
-    <script id="hangman-Temlplate" type="x-mustache-template"></script>
+    <script id="hangman-Template" type="x-mustache-template"></script>
 </head>
 
 <body>
@@ -12,15 +13,15 @@
     <main>
         <section id="guessesHere">
             <input type='text' id='guessBox'>
-            <button id="checkBtn">Guess</button> {{ #theWord }}
+            <button id="checkBtn">Guess</button>
             <p class="correctLetters">{{ . }}</p>
-            {{ /theWord}}
+           
         </section>
         <section id="previousGuesses">
             <h2>Previous Guesses</h2>
             {{ #previous }
             <p> {{ . }}</p>
-            {{ /previous }}
+            
         </section>
         <section id="lives">
             {{ lives }}

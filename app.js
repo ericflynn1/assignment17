@@ -18,8 +18,8 @@ let word = ['bat', 'cook', 'follow', 'guitar', 'bank', 'shallow', 'helicopter'];
 // http://stackoverflow.com/questions/4550505/getting-random-value-from-an-array
 // let pickWord = word[Math.floor(Math.random() * word.length)];
 // Works for generating radom word from list!
-function randomLength(pickWord) {
-    let randomWord = word[Math.floor(Math.random() * word.length)];
+function randomLength(word) {
+    let randomWord = Math.floor(Math.random() * word.length);
     return word[randomWord].split('');
 };
 // console.log(randomLength(pickWord));
@@ -36,20 +36,21 @@ function render(wordz, wrongLetters) {
     let template = document.querySelector("#hangman-Template").innerHTML;
     parent.innerHTML = Mustache.render(template, {
         wordToGuess: wordz,
-        graveyard: listOfWrongs,
-        lives: numGuesses() = listOfWrongs.length
+        graveyard: wrongLetters,
+        lives: numGuesses() - wrongLetters.length
     });
 }
 
 window.addEventListener('load', function () {
-    let wordToGuess = pickWord(word);
+    let wordToGuess = randomLength(word);
     console.log(wordToGuess);
     let wrongs = [];
     let rights = [];
     render(wordToGuess, wrongs);
     //Scott helped with this
-    let checkIt = document.querySelector('checkBtn');
-    checkIt.addEventListener('click' function () {
+    let checkIt = document.getElementById('checkBtn');
+    console.log(checkIt);
+    checkIt.addEventListener('click', function () {
         let guess = document.querySelector('#guess').value;
         if (wrongs.indexOf(inputValue) !== -1 || rights.indexOf(inputValue) !== -1) {
             console.log('nope!');
