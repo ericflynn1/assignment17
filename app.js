@@ -31,28 +31,51 @@ function numGuesses() {
 
 };
 
-function render(wordz, wrongLetters) {
+function render(wordz, wrongLetters, rightLetters) {
     let parent = document.querySelector('#guessesHere');
     let template = document.querySelector("#hangman-Template").innerHTML;
     parent.innerHTML = Mustache.render(template, {
         wordToGuess: wordz,
         graveyard: wrongLetters,
-        lives: numGuesses() - wrongLetters.length
     });
-}
+    parent = document.querySelector('#previousGuesses');
+    template = document.querySelector('#previous-Template').innerHTML;
+    parent.innerHTML = Mustache.render(template, {
+        previous: wrongLetters.concat(rightLetters),
+        lives: 8 - wrongLetters.length
+
+    });
+    parent = document.querySelector('#spiel');
+    template = document.querySelector('#word-Template').innerHTML;
+    parent.innerHTML = Mustache.render(template, {
+    })
+
+};
 
 window.addEventListener('load', function () {
     let wordToGuess = randomLength(word);
     console.log(wordToGuess);
     let wrongs = [];
     let rights = [];
-    render(wordToGuess, wrongs);
+    let wordLength = word.length;
+    let answerArray = [];
+    for (let i = 0; i < wordToGuess.length; i++) {
+
+        answerArray[i] = "_";
+    }
+    answerArray.join('');
+
+    let remainingLetters = wordToGuess.length;
+
+
+    render(wordToGuess, wrongs, rights, answerArray);
     //Scott helped with this
     let checkIt = document.getElementById('checkBtn');
-    console.log(checkIt);
+    // console.log(checkIt)
     checkIt.addEventListener('click', function () {
-        let guess = document.querySelector('#guess').value;
-        if (wrongs.indexOf(inputValue) !== -1 || rights.indexOf(inputValue) !== -1) {
+        let guess = document.querySelector('#guessBox').value;
+
+        if (wrongs.indexOf(guess) !== -1 || rights.indexOf(guess) !== -1) {
             console.log('nope!');
             document.querySelector('#guessBox').value = "";
             return
@@ -60,14 +83,14 @@ window.addEventListener('load', function () {
 
         let check = false;
         for (let i = 0; i < wordToGuess.length; i++) {
-            if (inputValue === wordToGuess[i]) {
-                rights.push(inputValue);
+            if (guess === wordToGuess[i]) {
+                rights.push(guess);
                 check = true;
                 console.log('Correct!');
             }
         }
         if (check === false) {
-            wrongs.push(inputValue);
+            wrongs.push(guess);
             console.log('WRONG');
         }
         check = false;
@@ -79,16 +102,27 @@ window.addEventListener('load', function () {
             console.log('WINNER');
         }
 
-        render(wordToGuess, wrongs);
-        let paragraph = document.querySelectorAll(".letter");
-
+        render(wordToGuess, wrongs, rights, answerArray);
+        // let paragraph = document.querySelectorAll(".letter");
+        // let wordLength = word.length;
+        // let underscores = "";
+        // for (i = 0; i < wordToGuess; i++) {
+        //     underscores = underscores + "_ "
+        // }
+        // antwort needs to equal the correct letter in the word
+        // let antwort = wordToGuess[i];
         for (let i = 0; i < wordToGuess.length; i++) {
             for (let j = 0; j < rights.length; j++) {
                 if (rights[j] === wordToGuess[i]) {
-                    paragraph[i].classList.remove('transparent');
+                    // wordToGuess[i].classList.remove('transparent');
+
+                    answerArray[i] = wordToGuess[i];
+                    console.log(answerArray);
+                    remainingLetters--;
                 }
             }
         }
-        document.querySelector("#guessBox").value = "";
-    });
+    })
+    document.querySelector("#guessBox").value = "";
 });
+// });

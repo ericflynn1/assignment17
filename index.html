@@ -6,27 +6,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.js"></script>
     <script src="app.js"></script>
     <script id="hangman-Template" type="x-mustache-template"></script>
+    <script id="previous-Template" type="x-mustache-template">
+        <h2>Previous Guesses</h2>
+            {{ #previous }}
+            <p> {{ . }}</p>
+            {{ /previous }}
+             {{ lives }}
+
+    </script>
+    <script id="guess-Template" type="x-mustache-template"></script>
+   <script id="word-Template" type="x-mustache-template">
+
+
+   </script>
+            
 </head>
 
 <body>
     <h1> Hangman</h1>
     <main>
+        
         <section id="guessesHere">
-            <input type='text' id='guessBox'>
-            <button id="checkBtn">Guess</button>
-            <p class="correctLetters">{{ . }}</p>
-           
-        </section>
-        <section id="previousGuesses">
-            <h2>Previous Guesses</h2>
-            {{ #previous }
-            <p> {{ . }}</p>
             
         </section>
-        <section id="lives">
-            {{ lives }}
+        <div id="guesses2">
+            <input type='text' id='guessBox'>
+            <button id="checkBtn">Guess</button>
+            </div>
+           
+        <section id="previousGuesses"></section>
+        <section id="livesLeft">
+           
         </section>
-        <section id="game">
+        <section id="spiel">
+            
 
         </section>
     </main>
