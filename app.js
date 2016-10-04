@@ -120,6 +120,9 @@ window.addEventListener('load', function () {
                     console.log(answerArray);
                     remainingLetters--;
                 }
+                let z = document.createElement('div');
+                z.innerHTML = answerArray;
+                document.body.appendChild(z);
             }
         }
     })
